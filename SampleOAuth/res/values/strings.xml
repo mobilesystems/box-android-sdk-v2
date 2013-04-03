@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">SampleOAuth</string>
+    <string name="exit">Exit</string>
+    <string name="title_activity_oauth">OAuthActivity</string>
+
+</resources>
