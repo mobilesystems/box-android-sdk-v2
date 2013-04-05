@@ -86,25 +86,7 @@
          In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
          in order to avoid having your file be overridden by tools such as "android update project"
     -->
-    <!-- version-tag: custom -->
+    <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
-        
-    <target name="clean" depends="android_rules.clean">
-        <ant dir="../BoxJavaLibraryExtendedV2" target="clean"/>
-        <delete file="libs/BoxJavaLibraryExtendedV2.jar"/>
-    </target>
-    <target name="debug-dependencies">
-        <ant dir="../BoxJavaLibraryExtendedV2" target="debug"/>
-        <copy file="../BoxJavaLibraryExtendedV2/dist/debug/BoxJavaLibraryExtendedV2.jar" todir="libs"/>
-    </target>
-    <target name="release-dependencies">
-        <ant dir="../BoxJavaLibraryExtendedV2" target="release"/>
-        <copy file="../BoxJavaLibraryExtendedV2/dist/release/BoxJavaLibraryExtendedV2.jar" todir="libs"/>
-    </target>
-    <target name="debug" depends="debug-dependencies">
-        <antcall target="android_rules.debug"/>
-    </target>
-    <target name="release" depends="release-dependencies">
-        <antcall target="android_rules.release"/>
-    </target>
+
 </project>

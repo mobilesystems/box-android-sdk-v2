@@ -1,8 +1,6 @@
-*.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
 bin/
 gen/
+dist/
+*.class
+local.properties
+BoxJavaLibraryV2.jar
