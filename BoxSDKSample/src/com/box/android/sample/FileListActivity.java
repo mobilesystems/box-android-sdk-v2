@@ -101,20 +101,30 @@ public class FileListActivity extends ListActivity {
         }
     }
 
-    public void navigateToFolder(String folderId) {
-        BoxCollection children;
-        try {
-            children = getClient().getFoldersManager().getFolderItems(folderId, null);
-            currentFolderId = folderId;
-        }
-        catch (BoxSDKException e) {
-            Log.e(TAG, "An error occurred when getting the folder's children.", e);
-            return;
-        }
+    public void navigateToFolder(final String folderId) {
+        new AsyncTask<Null, Void, BoxAndroidCollection>() {
 
-        ArrayList<BoxTypedObject> boxObjects = children.getEntries();
-        adapter.clear();
-        adapter.addAll(boxObjects);
+            @Override
+            protected BoxAndroidCollection doInBackground(Null... params) {
+                try {
+                    return (BoxAndroidCollection) getClient().getFoldersManager().getFolderItems(folderId, null);
+                }
+                catch (BoxSDKException e) {
+                    Log.e(TAG, "An error occurred when getting the folder's children.", e);
+                    return new BoxAndroidCollection();
+                }
+            }
+
+            @Override
+            protected void onPostExecute(BoxAndroidCollection result) {
+                currentFolderId = folderId;
+                ArrayList<BoxTypedObject> boxObjects = result.getEntries();
+                adapter.clear();
+                if (boxObjects != null) {
+                    adapter.addAll(boxObjects);
+                }
+            }
+        }.execute();
     }
 
     public void downloadFile(final BoxAndroidFile file) {
@@ -150,28 +160,45 @@ public class FileListActivity extends ListActivity {
 
     public void uploadFile(View view) {
         Toast.makeText(FileListActivity.this, "Uploading \"Sample File.txt\"...", Toast.LENGTH_LONG).show();
-        final File sampleFile;
-        try {
-            sampleFile = File.createTempFile("Sample File", "txt");
-            FileWriter fw = new FileWriter(sampleFile);
-            fw.write("This is a sample file created with the Box SDK.");
-            fw.close();
-        }
-        catch (IOException e) {
-            Log.e(TAG, "An error occurred when creating a sample upload file.", e);
-            return;
-        }
+        new AsyncTask<Null, Void, Boolean>() {
 
-        try {
-            BoxFileUploadRequestObject upload = BoxFileUploadRequestObject.uploadFileRequestObject("0", "Sample File.txt", sampleFile);
-            getClient().getFilesManager().uploadFiles(upload);
-            Log.v(TAG, "Sample file successfully uploaded.");
-        }
-        catch (BoxSDKException e) {
-            Log.e(TAG, "An error occurred when uploading a sample file.", e);
-        }
+            @Override
+            protected Boolean doInBackground(Null... params) {
+                final File sampleFile;
+                try {
+                    sampleFile = File.createTempFile("Sample File", ".txt");
+                    FileWriter fw = new FileWriter(sampleFile);
+                    fw.write("This is a sample file created with the Box SDK.");
+                    fw.close();
+                }
+                catch (IOException e) {
+                    Log.e(TAG, "An error occurred when creating a sample upload file.", e);
+                    return false;
+                }
 
-        Toast.makeText(FileListActivity.this, "Successfully uploaded.", Toast.LENGTH_LONG).show();
+                try {
+                    BoxFileUploadRequestObject upload = BoxFileUploadRequestObject.uploadFileRequestObject("0", "Sample File.txt", sampleFile);
+                    getClient().getFilesManager().uploadFiles(upload);
+                    Log.v(TAG, "Sample file successfully uploaded.");
+                }
+                catch (BoxSDKException e) {
+                    Log.e(TAG, "An error occurred when uploading a sample file.", e);
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                if (result) {
+                    Toast.makeText(FileListActivity.this, "Successfully uploaded.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(FileListActivity.this, "Failed to upload.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }.execute();
     }
 
     /**
