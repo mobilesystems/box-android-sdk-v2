@@ -9,8 +9,9 @@ import com.box.boxandroidlibv2.BoxAndroidClient;
  */
 public class BoxSDKSampleApplication extends Application {
 
-    public static final String CLIENT_ID = "vipzeyjh3g4s7phlzwjyvm79jfxkt4ga";
-    public static final String CLIENT_SECRET = "szBTd8Q86KgEJNgJgeOPDEEHdWY8Nrkr";
+    // TODO: use your own client settings
+    public static final String CLIENT_ID = "";
+    public static final String CLIENT_SECRET = "";
 
     private BoxAndroidClient mClient;
 

@@ -8,11 +8,11 @@ import com.box.boxandroidlibv2.dao.BoxAndroidFile;
 import com.box.boxandroidlibv2.dao.BoxAndroidFileVersion;
 import com.box.boxandroidlibv2.dao.BoxAndroidFolder;
 import com.box.boxandroidlibv2.dao.BoxAndroidOAuthData;
+import com.box.boxandroidlibv2.dao.BoxAndroidUser;
 import com.box.boxjavalibv2.dao.BoxItem;
 import com.box.boxjavalibv2.dao.BoxPreview;
 import com.box.boxjavalibv2.dao.BoxResourceType;
 import com.box.boxjavalibv2.dao.BoxTypedObject;
-import com.box.boxjavalibv2.dao.BoxUser;
 import com.box.boxjavalibv2.interfaces.IBoxResourceHub;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +43,7 @@ public class AndroidBoxResourceHub implements IBoxResourceHub {
             case FOLDER:
                 return BoxAndroidFolder.class;
             case USER:
-                return BoxUser.class;
+                return BoxAndroidUser.class;
             case FILE_VERSION:
                 return BoxAndroidFileVersion.class;
             case ITEM:

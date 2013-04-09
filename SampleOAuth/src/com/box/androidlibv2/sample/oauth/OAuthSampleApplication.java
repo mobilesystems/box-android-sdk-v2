@@ -6,8 +6,9 @@ import com.box.boxandroidlibv2.BoxAndroidClient;
 
 public class OAuthSampleApplication extends Application {
 
-    private static final String CLIENT_ID = "vipzeyjh3g4s7phlzwjyvm79jfxkt4ga";
-    private static final String CLIENT_SECRET = "szBTd8Q86KgEJNgJgeOPDEEHdWY8Nrkr";
+    // TODO: use your own client settings
+    private static final String CLIENT_ID = "";
+    private static final String CLIENT_SECRET = "";
 
     private BoxAndroidClient client;
 
