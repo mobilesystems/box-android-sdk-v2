@@ -139,22 +139,27 @@ public class FileListActivity extends ListActivity {
 		if (currentFolderId == "0") {
 			super.onBackPressed();
 		}
+		Thread t = new Thread(){
+			public void run(){
+				String parentFolderId;
+				try {
+					BoxFolder parentFolder = getClient().getFoldersManager()
+							.getFolder(currentFolderId, null).getParent();
+					if (parentFolder == null) {
+						parentFolderId = "0";
+					} else {
+						parentFolderId = parentFolder.getId();
+					}
+				} catch (BoxSDKException e) {
+					Log.e(TAG, "An error occurred when getting a parent folder ID.", e);
+					return;
+				}
 
-		String parentFolderId;
-		try {
-			BoxFolder parentFolder = getClient().getFoldersManager()
-					.getFolder(currentFolderId, null).getParent();
-			if (parentFolder == null) {
-				parentFolderId = "0";
-			} else {
-				parentFolderId = parentFolder.getId();
+				navigateToFolder(parentFolderId);
 			}
-		} catch (BoxSDKException e) {
-			Log.e(TAG, "An error occurred when getting a parent folder ID.", e);
-			return;
-		}
+		};
+		t.start();
 
-		navigateToFolder(parentFolderId);
 	}
 
 	@Override
