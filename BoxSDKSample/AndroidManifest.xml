@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.box.android.sample"
-      android:versionCode="1"
-      android:versionName="1.0">
-      <uses-sdk
+    package="com.box.android.sample"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="15" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <application android:label="@string/app_name" android:name="BoxSDKSampleApplication">
-        <activity android:name=".FileListActivity"
-                  android:label="@string/app_name">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="BoxSDKSampleApplication"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".FileListActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="com.box.boxandroidlibv2.activities.OAuthActivity" />
-    </application>
-</manifest> 
+        <activity
+            android:name="com.box.boxandroidlibv2.activities.FolderPickerActivity"
+            android:theme="@style/Theme.DialogNoTitle"
+            android:label="@string/choose_destination_folder" />
+        <activity
+            android:name="com.box.boxandroidlibv2.activities.FilePickerActivity"
+            android:theme="@style/Theme.DialogNoTitle"
+            android:label="@string/choose_file_to_download" />
+        
+        </application>
+
+</manifest>

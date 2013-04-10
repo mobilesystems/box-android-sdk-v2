@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Box SDK Sample</string>
     <string name="upload_file">Upload Sample File</string>
+    <string name="choose_destination_folder">Choose destination folder</string>
+    <string name="choose_file_to_download">Choose file to download</string>
+
 </resources>

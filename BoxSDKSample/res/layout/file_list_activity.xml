@@ -5,10 +5,22 @@
     android:orientation="vertical" >
 
     <Button
+        android:id="@+id/btnUploadFile"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="uploadFile"
         android:text="@string/upload_file" />
+
+    <Button
+        android:id="@+id/btnDownloadFileViaPicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_file_to_download" />
+
+    <Button
+        android:id="@+id/btnChangeFolderLocationViaPicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_destination_folder" />
 
     <ListView
         android:id="@android:id/list"
