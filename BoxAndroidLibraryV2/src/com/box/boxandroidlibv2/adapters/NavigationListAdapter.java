@@ -59,7 +59,7 @@ public class NavigationListAdapter extends ArrayAdapter<NavigationItem> {
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
 
-        View v = mInflater.inflate(R.layout.navigation_item_folder, parent, false);
+        View v = mInflater.inflate(R.layout.boxandroidlibv2_navigation_item_folder, parent, false);
         if (v == null) {
             return null;
         }
@@ -73,7 +73,7 @@ public class NavigationListAdapter extends ArrayAdapter<NavigationItem> {
     @Override
     public View getDropDownView(final int position, final View convertView, final ViewGroup parent) {
 
-        View v = mInflater.inflate(R.layout.navigation_dropdown_item_folder, parent, false);
+        View v = mInflater.inflate(R.layout.boxandroidlibv2_navigation_dropdown_item_folder, parent, false);
         if (v == null) {
             return null;
         }

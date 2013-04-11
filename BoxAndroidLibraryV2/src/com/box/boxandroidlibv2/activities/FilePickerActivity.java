@@ -127,7 +127,7 @@ public class FilePickerActivity extends FolderNavigationActivity {
 
     @Override
     protected void initializeViews() {
-        setContentView(R.layout.layout_file_picker);
+        setContentView(R.layout.boxandroidlibv2_layout_file_picker);
         TextView customTitle = (TextView) this.findViewById(R.id.customTitle);
         customTitle.setText(getTitle());
         // to make dialog theme fill the full view.

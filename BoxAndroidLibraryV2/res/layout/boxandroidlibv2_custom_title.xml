@@ -5,5 +5,5 @@
     android:layout_height="50dp"
     android:textSize="20sp"
     android:gravity="center"
-    android:background="@drawable/box_background_header"
+    android:background="@drawable/boxandroidlibv2_box_background_header"
     android:textColor="#ffffffff" />

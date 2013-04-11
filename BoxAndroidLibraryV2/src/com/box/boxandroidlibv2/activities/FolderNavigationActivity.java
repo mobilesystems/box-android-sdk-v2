@@ -159,7 +159,7 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
      * @return the listview that will be used to navigate.
      */
     protected void initializeViews() {
-        setContentView(R.layout.layout_picker);
+        setContentView(R.layout.boxandroidlibv2_layout_picker);
         // to make dialog theme fill the full view.
         getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     }
@@ -215,7 +215,7 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
      */
     protected void onFetchedFolder(final Intent intent) {
         if (!intent.getBooleanExtra(Controller.ARG_SUCCESS, false)) {
-            Toast.makeText(this, getResources().getString(R.string.Problem_fetching_folder), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.boxandroidlibv2_Problem_fetching_folder), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -243,7 +243,7 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
      */
     protected void onFetchedFolderItems(final Intent intent) {
         if (!intent.getBooleanExtra(Controller.ARG_SUCCESS, false)) {
-            Toast.makeText(this, getResources().getString(R.string.Problem_fetching_folder), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.boxandroidlibv2_Problem_fetching_folder), Toast.LENGTH_LONG).show();
             return;
         }
 

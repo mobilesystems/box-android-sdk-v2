@@ -7,15 +7,15 @@
         android:id="@+id/boxItemMain"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/list_item_selector"
+        android:background="@drawable/boxandroidlibv2_list_item_selector"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="4dp" >
 
         <FrameLayout
+            android:layout_marginLeft="6dp"
             android:layout_width="36dip"
             android:layout_height="36dip"
-            android:layout_marginLeft="6dp"
             android:adjustViewBounds="true" >
 
             <ImageView
@@ -24,53 +24,33 @@
                 android:layout_height="34dip"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/generic" />
+                android:src="@drawable/boxandroidlibv2_generic" />
 
             <ProgressBar
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:indeterminateDrawable="@drawable/progress_spinner"
+                android:indeterminateDrawable="@drawable/boxandroidlibv2_progress_spinner"
                 android:visibility="gone" />
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:baselineAlignBottom="true"
                 android:ellipsize="end"
+                android:gravity="center_vertical"
                 android:paddingLeft="8dip"
                 android:paddingTop="4dip"
                 android:singleLine="true"
                 android:textColor="#000000"
-                android:textSize="15dip"
+                android:textSize="15sp"
                 android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/metaline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="6dip" >
-
-                <TextView
-                    android:id="@+id/metaline_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="middle"
-                    android:paddingLeft="8dip"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

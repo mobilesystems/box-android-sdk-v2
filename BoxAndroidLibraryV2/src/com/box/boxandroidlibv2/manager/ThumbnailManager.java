@@ -144,10 +144,10 @@ public class ThumbnailManager {
      */
     private int getDefaultIconResource(final BoxItem boxItem) {
         if (boxItem instanceof BoxFolder) {
-            return R.drawable.icon_folder_personal;
+            return R.drawable.boxandroidlibv2_icon_folder_personal;
         }
         else {
-            return R.drawable.generic;
+            return R.drawable.boxandroidlibv2_generic;
         }
     }
 

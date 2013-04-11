@@ -61,10 +61,10 @@ public class BoxListItemAdapter extends ArrayAdapter<BoxListItem> {
             // Creates a ViewHolder and store references to the children views
             // we want to bind data to.
             if (this.getItemViewType(position) == BoxListItem.TYPE_BOX_FOLDER_ITEM) {
-                row = LayoutInflater.from(getContext()).inflate(R.layout.box_folder_list_item, parent, false);
+                row = LayoutInflater.from(getContext()).inflate(R.layout.boxandroidlibv2_box_folder_list_item, parent, false);
             }
             else {
-                row = LayoutInflater.from(getContext()).inflate(R.layout.box_list_item, parent, false);
+                row = LayoutInflater.from(getContext()).inflate(R.layout.boxandroidlibv2_box_list_item, parent, false);
             }
             row.setTag(holder);
             holder.setIconView((ImageView) row.findViewById(R.id.icon));
@@ -107,7 +107,7 @@ public class BoxListItemAdapter extends ArrayAdapter<BoxListItem> {
             if (!listItem.getTask().isDone()) {
                 holder.mSpinner.setVisibility(View.VISIBLE);
                 holder.getIconView().setVisibility(View.GONE);
-                holder.getNameView().setText(getContext().getResources().getString(R.string.Please_wait));
+                holder.getNameView().setText(getContext().getResources().getString(R.string.boxandroidlibv2_Please_wait));
             }
             return;
         }

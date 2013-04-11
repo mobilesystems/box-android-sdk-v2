@@ -154,10 +154,10 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
                 listener.onAuthFlowEvent(OAuthEvent.AUTH_REQUEST_RECEIVED, new StringMessage(host, realm));
             }
             LayoutInflater factory = mActivity.getLayoutInflater();
-            final View textEntryView = factory.inflate(R.layout.alert_dialog_text_entry, null);
+            final View textEntryView = factory.inflate(R.layout.boxandroidlibv2_alert_dialog_text_entry, null);
 
-            AlertDialog loginAlert = new AlertDialog.Builder(mActivity).setTitle(R.string.alert_dialog_text_entry).setView(textEntryView)
-                .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+            AlertDialog loginAlert = new AlertDialog.Builder(mActivity).setTitle(R.string.boxandroidlibv2_alert_dialog_text_entry).setView(textEntryView)
+                .setPositiveButton(R.string.boxandroidlibv2_alert_dialog_ok, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(final DialogInterface dialog, final int whichButton) {
@@ -165,7 +165,7 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
                         String password = ((EditText) textEntryView.findViewById(R.id.password_edit)).getText().toString();
                         handler.proceed(userName, password);
                     }
-                }).setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
+                }).setNegativeButton(R.string.boxandroidlibv2_alert_dialog_cancel, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(final DialogInterface dialog, final int whichButton) {

@@ -32,7 +32,7 @@ public class OAuthActivity extends Activity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_oauth);
+        setContentView(R.layout.boxandroidlibv2_activity_oauth);
 
         String clientId = getIntent().getStringExtra(CLIENT_ID);
         String clientSecret = getIntent().getStringExtra(CLIENT_SECRET);
