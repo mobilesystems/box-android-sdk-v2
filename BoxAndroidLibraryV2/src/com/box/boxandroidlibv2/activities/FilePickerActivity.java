@@ -19,7 +19,7 @@ import com.box.boxandroidlibv2.R;
 import com.box.boxandroidlibv2.adapters.NavigationListAdapter;
 import com.box.boxandroidlibv2.dao.BoxAndroidFile;
 import com.box.boxandroidlibv2.dao.BoxAndroidFolder;
-import com.box.boxandroidlibv2.dao.NavigationItem;
+import com.box.boxandroidlibv2.viewdata.NavigationItem;
 import com.box.boxjavalibv2.dao.BoxItem;
 
 /**

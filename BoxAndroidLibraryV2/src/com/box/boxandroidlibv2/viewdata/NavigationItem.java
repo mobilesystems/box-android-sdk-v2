@@ -1,4 +1,4 @@
-package com.box.boxandroidlibv2.dao;
+package com.box.boxandroidlibv2.viewdata;
 
 
 /**

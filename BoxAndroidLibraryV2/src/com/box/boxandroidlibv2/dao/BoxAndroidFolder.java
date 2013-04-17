@@ -31,6 +31,17 @@ public class BoxAndroidFolder extends BoxFolder implements Parcelable {
     }
 
     @Override
+    @JsonProperty(FIELD_PARENT)
+    public BoxAndroidFolder getParent() {
+        return (BoxAndroidFolder) getValue(FIELD_PARENT);
+    }
+
+    @JsonProperty(FIELD_PARENT)
+    private void setParent(BoxAndroidFolder folder) {
+        put(FIELD_PARENT, folder);
+    }
+
+    @Override
     @JsonProperty(FIELD_ITEM_COLLECTION)
     public BoxAndroidCollection getItemCollection() {
         return (BoxAndroidCollection) getValue(FIELD_ITEM_COLLECTION);

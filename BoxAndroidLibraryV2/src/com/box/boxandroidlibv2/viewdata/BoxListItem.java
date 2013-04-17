@@ -1,7 +1,8 @@
-package com.box.boxandroidlibv2.dao;
+package com.box.boxandroidlibv2.viewdata;
 
 import java.util.concurrent.FutureTask;
 
+import com.box.boxandroidlibv2.dao.BoxAndroidFolder;
 import com.box.boxjavalibv2.dao.BoxItem;
 
 /**

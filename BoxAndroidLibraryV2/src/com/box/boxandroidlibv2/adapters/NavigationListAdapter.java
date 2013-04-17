@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.box.boxandroidlibv2.R;
-import com.box.boxandroidlibv2.dao.NavigationItem;
+import com.box.boxandroidlibv2.viewdata.NavigationItem;
 
 /**
  * Adapter for navigation items.

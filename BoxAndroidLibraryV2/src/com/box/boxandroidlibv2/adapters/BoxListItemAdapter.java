@@ -19,8 +19,8 @@ import com.box.boxandroidlibv2.R;
 import com.box.boxandroidlibv2.dao.BoxAndroidCollection;
 import com.box.boxandroidlibv2.dao.BoxAndroidFile;
 import com.box.boxandroidlibv2.dao.BoxAndroidFolder;
-import com.box.boxandroidlibv2.dao.BoxListItem;
 import com.box.boxandroidlibv2.manager.ThumbnailManager;
+import com.box.boxandroidlibv2.viewdata.BoxListItem;
 import com.box.boxjavalibv2.dao.BoxItem;
 import com.box.boxjavalibv2.dao.BoxTypedObject;
 

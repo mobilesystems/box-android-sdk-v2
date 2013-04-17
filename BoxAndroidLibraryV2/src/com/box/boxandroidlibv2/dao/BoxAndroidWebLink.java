@@ -40,6 +40,17 @@ public class BoxAndroidWebLink extends BoxWebLink implements Parcelable {
     }
 
     @Override
+    @JsonProperty(FIELD_PARENT)
+    public BoxAndroidFolder getParent() {
+        return (BoxAndroidFolder) getValue(FIELD_PARENT);
+    }
+
+    @JsonProperty(FIELD_PARENT)
+    private void setParent(BoxAndroidFolder folder) {
+        put(FIELD_PARENT, folder);
+    }
+
+    @Override
     @JsonProperty(FIELD_SHARED_LINK)
     public BoxAndroidSharedLink getSharedLink() {
         return (BoxAndroidSharedLink) getValue(FIELD_SHARED_LINK);
@@ -48,6 +59,17 @@ public class BoxAndroidWebLink extends BoxWebLink implements Parcelable {
     @JsonProperty(FIELD_SHARED_LINK)
     private void setSharedLink(BoxAndroidSharedLink sharedLink) {
         put(FIELD_SHARED_LINK, sharedLink);
+    }
+
+    @Override
+    @JsonProperty(FIELD_PATH_COLLECTION)
+    public BoxAndroidCollection getPathCollection() {
+        return (BoxAndroidCollection) getValue(FIELD_PATH_COLLECTION);
+    }
+
+    @JsonProperty(FIELD_PATH_COLLECTION)
+    private void setPathCollection(BoxAndroidCollection pathCollection) {
+        put(FIELD_PATH_COLLECTION, pathCollection);
     }
 
     @Override

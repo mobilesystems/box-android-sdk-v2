@@ -12,8 +12,8 @@ import com.box.boxandroidlibv2.BoxAndroidClient;
 import com.box.boxandroidlibv2.R;
 import com.box.boxandroidlibv2.adapters.BoxListItemAdapter;
 import com.box.boxandroidlibv2.dao.BoxAndroidFolder;
-import com.box.boxandroidlibv2.dao.BoxListItem;
 import com.box.boxandroidlibv2.manager.ThumbnailManager;
+import com.box.boxandroidlibv2.viewdata.BoxListItem;
 
 /**
  * This class is used to choose a particular folder from the user's account and when chosen will return a result with a BoxAndroidFolder in the extra
