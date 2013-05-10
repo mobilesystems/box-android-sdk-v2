@@ -9,6 +9,7 @@ import com.box.boxandroidlibv2.dao.BoxAndroidFileVersion;
 import com.box.boxandroidlibv2.dao.BoxAndroidFolder;
 import com.box.boxandroidlibv2.dao.BoxAndroidOAuthData;
 import com.box.boxandroidlibv2.dao.BoxAndroidUser;
+import com.box.boxandroidlibv2.dao.BoxAndroidWebLink;
 import com.box.boxjavalibv2.dao.BoxItem;
 import com.box.boxjavalibv2.dao.BoxPreview;
 import com.box.boxjavalibv2.dao.BoxResourceType;
@@ -56,6 +57,8 @@ public class AndroidBoxResourceHub implements IBoxResourceHub {
                 return BoxAndroidEmailAlias.class;
             case OAUTH_DATA:
                 return BoxAndroidOAuthData.class;
+            case WEB_LINK:
+                return BoxAndroidWebLink.class;
             case ITEMS:
             case FILES:
             case USERS:
@@ -63,6 +66,7 @@ public class AndroidBoxResourceHub implements IBoxResourceHub {
             case FILE_VERSIONS:
             case COLLABORATIONS:
             case EMAIL_ALIASES:
+            case WEB_LINKS:
                 return BoxAndroidCollection.class;
             default:
                 return BoxTypedObject.class;
