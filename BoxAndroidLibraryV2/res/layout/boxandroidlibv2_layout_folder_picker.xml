@@ -39,7 +39,7 @@
         android:background="@drawable/boxandroidlibv2_btn_cta_states"
         android:gravity="center"
         android:padding="12dip"
-        android:text="@string/boxandroidlibv2_Choose"
+        android:text="@string/boxandroidlibv2_Select"
         android:textColor="#FFFFFFFF"
         android:textSize="20sp"
         android:textStyle="bold" />
