@@ -15,6 +15,59 @@ Copyright 2013 Box, Inc.
 box-android-sdk-private
 =======================
 
+Building
+--------
+
+### Eclipse
+
+The Android SDK depends on the [Box Java SDK][java-sdk], so you must first
+import it into your workspace and make sure it builds. Import the Android SDK
+second and make the Java SDK a build dependency.
+
+### Ant
+
+First clone the [Box Java SDK][java-sdk] and follow the instructions in its
+readme on how to build it. Copy the the built BoxJavaLibraryV2.jar to
+BoxAndroidLibraryV2/libs. You can then use Ant to build the project like you
+would with any other Android library. The simplest way to do this is by running
+`ant debug`.
+
+### Gradle (Experimental)
+
+There is also experimental support for Gradle, allowing you to use the SDK with
+Android Studio. You must have [Gradle 1.6](http://www.gradle.org/downloads)
+installed.
+
+Before the Android SDK can be built, you must first install the [Box Java SDK
+][java-sdk] to your local Maven repository. This can be done by following the
+Gradle build instructions included in the Java SDK's readme.
+
+The Android SDK also depends on the Android Support Library. Unfortunately,
+telling Gradle to look for the android-support JAR directly will likely result
+in dex merge conflicts if more than one project uses the support library. The
+easiest way to get around this is by also installing android-support-v4.jar to
+your local Maven repo. Run the following command, where $ANDROID_HOME points to
+your Android SDK root (you must have Maven installed).
+
+	mvn install:install-file \
+	-Dfile=$ANDROID_HOME/extras/android/support/v4/android-support-v4.jar \
+	-DgroupId=com.google.android \
+	-DartifactId=support-v4 \
+	-Dversion=r13 \
+	-Dpackaging=jar
+
+You can now run `gradle build` to build the SDK. However, building the library
+by itself isn't very useful. To reference the SDK from another Android Gradle
+project, add the following to your list of dependencies:
+
+	dependencies {
+		...
+		compile project(':box-android-sdk-private:BoxAndroidLibraryV2')
+	}
+
+You can refer to the Android Gradle guide on multi project setups [here
+][android-gradle].
+
 API Calls Quickstart
 --------------------
 
@@ -157,7 +210,5 @@ BoxOAuthToken oauthObject = boxClient.getAuthData();
 boxClient.authenticate(oauthObject);
 ```
 
-Known Issues
-------------
-
-
+[java-sdk]: https://github.com/box/box-java-sdk-private
+[android-gradle]: http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Multi-project-setup
