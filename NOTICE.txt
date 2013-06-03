@@ -1,0 +1,2 @@
+Box Android SDK
+Copyright 2013 Box, Inc.
