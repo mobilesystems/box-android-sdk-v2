@@ -246,6 +246,10 @@ public class FileListActivity extends ListActivity {
                     Log.e(TAG, "An error occurred when uploading a sample file.", e);
                     return false;
                 }
+                catch (InterruptedException e) {
+                    Log.e(TAG, "Interrupted.", e);
+                    return false;
+                }
                 return true;
             }
 
