@@ -40,6 +40,7 @@ import com.box.boxandroidlibv2.viewdata.BoxListItem;
 import com.box.boxjavalibv2.dao.BoxItem;
 import com.box.boxjavalibv2.exceptions.AuthFatalFailureException;
 import com.box.boxjavalibv2.exceptions.BoxServerException;
+import com.box.boxjavalibv2.requests.requestobjects.BoxDefaultRequestObject;
 import com.box.boxjavalibv2.requests.requestobjects.BoxFolderRequestObject;
 import com.box.boxjavalibv2.requests.requestobjects.BoxImageRequestObject;
 import com.box.restclientv2.exceptions.BoxRestException;
@@ -61,6 +62,10 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
 
     protected static final String EXTRA_BOX_CLIENT = "extraClient";
 
+    protected static final String EXTRA_NAV_NUMBER = "nav";
+
+    protected static final String EXTRA_SOURCE_TYPE = "sdk_source";
+
     private Controller mController;
 
     private ListView mListView;
@@ -70,6 +75,9 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
     protected String mCurrentFolderId = "0";
 
     protected BoxAndroidClient mClient;
+
+    /** Because this activity will launch instances of itself this indicates how deep the activity stack is for these internal activities. */
+    protected int mNavNumber = 0;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -87,10 +95,12 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
         if (getIntent() != null) {
             mClient = getIntent().getParcelableExtra(EXTRA_BOX_CLIENT);
             mCurrentFolderId = getIntent().getStringExtra(EXTRA_FOLDER_ID);
+            mNavNumber = getIntent().getIntExtra(EXTRA_NAV_NUMBER, 0);
         }
         if (savedInstanceState != null) {
             mClient = savedInstanceState.getParcelable(EXTRA_BOX_CLIENT);
             mCurrentFolderId = savedInstanceState.getString(EXTRA_FOLDER_ID);
+            mNavNumber = getIntent().getIntExtra(EXTRA_NAV_NUMBER, 0);
         }
         if (mClient == null) {
             if (mClient == null) {
@@ -186,6 +196,7 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(EXTRA_FOLDER_ID, mCurrentFolderId);
         outState.putParcelable(EXTRA_BOX_CLIENT, mClient);
+        outState.putInt(EXTRA_NAV_NUMBER, mNavNumber);
         super.onSaveInstanceState(outState);
     }
 
@@ -233,6 +244,10 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
 
             }
         }
+    }
+
+    protected String getSourceType() {
+        return "base_chooser";
     }
 
     /**
@@ -405,8 +420,7 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
         public static final String ARG_BOX_COLLECTION = "PickerActivity_Collection";
 
         /**
-         * Fetch a Box folder using v2. For now this method will NOT send out a broadcast so it does not interfere with the v1 call. Eventually the two methods
-         * will be merged to use v2.
+         * Fetch a Box folder using v2.
          * 
          * @param folderId
          *            Folder id to be fetched.
@@ -421,8 +435,10 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
                     intent.setAction(ACTION_FETCHED_FOLDER);
                     intent.putExtra(ARG_FOLDER_ID, folderId);
                     try {
-
-                        BoxAndroidFolder bf = (BoxAndroidFolder) mClient.getFoldersManager().getFolder(folderId, null);
+                        BoxDefaultRequestObject defaultRequest = new BoxDefaultRequestObject();
+                        defaultRequest.addQueryParam(EXTRA_NAV_NUMBER, Integer.toString(mNavNumber));
+                        defaultRequest.addQueryParam(EXTRA_SOURCE_TYPE, getSourceType());
+                        BoxAndroidFolder bf = (BoxAndroidFolder) mClient.getFoldersManager().getFolder(folderId, defaultRequest);
                         if (bf != null) {
                             intent.putExtra(ARG_SUCCESS, true);
                             intent.putExtra(Controller.ARG_BOX_FOLDER, bf);

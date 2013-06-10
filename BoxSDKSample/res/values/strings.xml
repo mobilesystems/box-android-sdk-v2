@@ -3,7 +3,7 @@
 
     <string name="app_name">Box SDK Sample</string>
     <string name="upload_file">Upload Sample File</string>
-    <string name="choose_destination_folder">Choose destination folder</string>
-    <string name="choose_file_to_download">Choose file to download</string>
+    <string name="Select_destination_folder">Select destination folder</string>
+    <string name="Select_file_to_download">Select file to download</string>
 
 </resources>

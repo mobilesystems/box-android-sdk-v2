@@ -134,4 +134,9 @@ public class FolderPickerActivity extends FilePickerActivity {
         }
 
     }
+    
+    @Override
+    protected String getSourceType() {
+        return "folder_chooser";
+    }
 }

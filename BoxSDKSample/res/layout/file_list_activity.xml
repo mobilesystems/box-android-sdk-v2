@@ -14,13 +14,13 @@
         android:id="@+id/btnDownloadFileViaPicker"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/choose_file_to_download" />
+        android:text="@string/Select_file_to_download" />
 
     <Button
         android:id="@+id/btnChangeFolderLocationViaPicker"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/choose_destination_folder" />
+        android:text="@string/Select_destination_folder" />
 
     <ListView
         android:id="@android:id/list"

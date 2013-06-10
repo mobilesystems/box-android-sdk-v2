@@ -96,6 +96,7 @@ public class FilePickerActivity extends FolderNavigationActivity {
         }
         Intent intent = getLaunchIntent(this, folderId, mClient);
         intent.setClass(this, getClass());
+        intent.putExtra(EXTRA_NAV_NUMBER, (mNavNumber + 1));
 
         startActivityForResult(intent, FILE_PICKER_REQUEST_CODE);
     }
@@ -114,6 +115,7 @@ public class FilePickerActivity extends FolderNavigationActivity {
         }
         Intent intent = getLaunchIntent(this, folderName, folderId, mClient);
         intent.setClass(this, getClass());
+        intent.putExtra(EXTRA_NAV_NUMBER, (mNavNumber + 1));
 
         startActivityForResult(intent, FILE_PICKER_REQUEST_CODE);
     }
@@ -204,7 +206,9 @@ public class FilePickerActivity extends FolderNavigationActivity {
 
     /**
      * Shows a single navigation item in the spinner.
-     * @param navigationItem The navigation item to show.
+     * 
+     * @param navigationItem
+     *            The navigation item to show.
      */
     protected void setNavigationSpinner(final NavigationItem navigationItem) {
         if (navigationItem == null) {
@@ -220,7 +224,9 @@ public class FilePickerActivity extends FolderNavigationActivity {
 
     /**
      * Shows a navigation spinner with all items in the provided folder.
-     * @param currentFolder The folder to show in the navigation spinner.
+     * 
+     * @param currentFolder
+     *            The folder to show in the navigation spinner.
      */
     protected void setNavigationSpinner(final BoxAndroidFolder currentFolder) {
         if (currentFolder == null) {
@@ -250,6 +256,11 @@ public class FilePickerActivity extends FolderNavigationActivity {
 
         });
 
+    }
+    
+    @Override
+    protected String getSourceType() {
+        return "file_picker";
     }
 
 }

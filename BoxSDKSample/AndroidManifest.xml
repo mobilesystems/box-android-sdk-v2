@@ -27,11 +27,11 @@
         <activity
             android:name="com.box.boxandroidlibv2.activities.FolderPickerActivity"
             android:theme="@style/Theme.Boxandroidlibv2.DialogNoTitle"
-            android:label="@string/choose_destination_folder" />
+            android:label="@string/Select_destination_folder" />
         <activity
             android:name="com.box.boxandroidlibv2.activities.FilePickerActivity"
             android:theme="@style/Theme.Boxandroidlibv2.DialogNoTitle"
-            android:label="@string/choose_file_to_download" />
+            android:label="@string/Select_file_to_download" />
         
         </application>
 
