@@ -100,7 +100,7 @@ public class FolderNavigationActivity extends Activity implements OnItemClickLis
         if (savedInstanceState != null) {
             mClient = savedInstanceState.getParcelable(EXTRA_BOX_CLIENT);
             mCurrentFolderId = savedInstanceState.getString(EXTRA_FOLDER_ID);
-            mNavNumber = getIntent().getIntExtra(EXTRA_NAV_NUMBER, 0);
+            mNavNumber = savedInstanceState.getInt(EXTRA_NAV_NUMBER, 0);
         }
         if (mClient == null) {
             if (mClient == null) {
