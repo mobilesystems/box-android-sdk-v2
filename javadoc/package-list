@@ -1,8 +1,10 @@
 com.box.boxandroidlibv2
 com.box.boxandroidlibv2.activities
+com.box.boxandroidlibv2.adapters
 com.box.boxandroidlibv2.dao
 com.box.boxandroidlibv2.exceptions
 com.box.boxandroidlibv2.jacksonparser
+com.box.boxandroidlibv2.manager
 com.box.boxandroidlibv2.viewdata
 com.box.boxandroidlibv2.viewlisteners
 com.box.boxandroidlibv2.views
