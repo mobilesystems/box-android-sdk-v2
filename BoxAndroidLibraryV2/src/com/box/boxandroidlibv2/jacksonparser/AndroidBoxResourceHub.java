@@ -14,24 +14,12 @@ import com.box.boxjavalibv2.dao.BoxItem;
 import com.box.boxjavalibv2.dao.BoxPreview;
 import com.box.boxjavalibv2.dao.BoxResourceType;
 import com.box.boxjavalibv2.dao.BoxTypedObject;
-import com.box.boxjavalibv2.interfaces.IBoxResourceHub;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.box.boxjavalibv2.jacksonparser.BoxResourceHub;
 
 /**
  * Resource hub to direct the parsing of the api responses into our android sdk data objects.
  */
-public class AndroidBoxResourceHub implements IBoxResourceHub {
-
-    private final ObjectMapper mObjectMapper;
-
-    public AndroidBoxResourceHub() {
-        mObjectMapper = new ObjectMapper();
-        mObjectMapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false);
-        mObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        mObjectMapper.addMixInAnnotations(BoxItem.class, AndroidBoxItemMixIn.class);
-        mObjectMapper.addMixInAnnotations(BoxTypedObject.class, AndroidBoxTypedObjectMixIn.class);
-    }
+public class AndroidBoxResourceHub extends BoxResourceHub {
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -71,11 +59,6 @@ public class AndroidBoxResourceHub implements IBoxResourceHub {
             default:
                 return BoxTypedObject.class;
         }
-    }
-
-    @Override
-    public ObjectMapper getObjectMapper() {
-        return mObjectMapper;
     }
 
 }
