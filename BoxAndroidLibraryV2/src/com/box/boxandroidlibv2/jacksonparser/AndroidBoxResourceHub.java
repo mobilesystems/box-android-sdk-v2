@@ -4,16 +4,14 @@ import com.box.boxandroidlibv2.dao.BoxAndroidCollaboration;
 import com.box.boxandroidlibv2.dao.BoxAndroidCollection;
 import com.box.boxandroidlibv2.dao.BoxAndroidComment;
 import com.box.boxandroidlibv2.dao.BoxAndroidEmailAlias;
+import com.box.boxandroidlibv2.dao.BoxAndroidEvent;
 import com.box.boxandroidlibv2.dao.BoxAndroidFile;
 import com.box.boxandroidlibv2.dao.BoxAndroidFileVersion;
 import com.box.boxandroidlibv2.dao.BoxAndroidFolder;
 import com.box.boxandroidlibv2.dao.BoxAndroidOAuthData;
 import com.box.boxandroidlibv2.dao.BoxAndroidUser;
 import com.box.boxandroidlibv2.dao.BoxAndroidWebLink;
-import com.box.boxjavalibv2.dao.BoxItem;
-import com.box.boxjavalibv2.dao.BoxPreview;
 import com.box.boxjavalibv2.dao.BoxResourceType;
-import com.box.boxjavalibv2.dao.BoxTypedObject;
 import com.box.boxjavalibv2.jacksonparser.BoxResourceHub;
 
 /**
@@ -27,16 +25,12 @@ public class AndroidBoxResourceHub extends BoxResourceHub {
         switch (type) {
             case FILE:
                 return BoxAndroidFile.class;
-            case PREVIEW:
-                return BoxPreview.class;
             case FOLDER:
                 return BoxAndroidFolder.class;
             case USER:
                 return BoxAndroidUser.class;
             case FILE_VERSION:
                 return BoxAndroidFileVersion.class;
-            case ITEM:
-                return BoxItem.class;
             case COMMENT:
                 return BoxAndroidComment.class;
             case COLLABORATION:
@@ -47,6 +41,8 @@ public class AndroidBoxResourceHub extends BoxResourceHub {
                 return BoxAndroidOAuthData.class;
             case WEB_LINK:
                 return BoxAndroidWebLink.class;
+            case EVENT:
+                return BoxAndroidEvent.class;
             case ITEMS:
             case FILES:
             case USERS:
@@ -57,7 +53,7 @@ public class AndroidBoxResourceHub extends BoxResourceHub {
             case WEB_LINKS:
                 return BoxAndroidCollection.class;
             default:
-                return BoxTypedObject.class;
+                return super.getClass(type);
         }
     }
 
