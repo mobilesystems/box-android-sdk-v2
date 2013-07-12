@@ -1,19 +1,26 @@
 package com.box.boxandroidlibv2.activities;
 
+import org.apache.commons.lang.ObjectUtils.Null;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.http.SslError;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
 
 import com.box.boxandroidlibv2.BoxAndroidClient;
 import com.box.boxandroidlibv2.viewlisteners.OAuthWebViewListener;
+import com.box.boxandroidlibv2.viewlisteners.StringMessage;
 import com.box.boxandroidlibv2.views.OAuthWebView;
 import com.box.boxjavalibv2.events.OAuthEvent;
+import com.box.boxjavalibv2.exceptions.AuthFatalFailureException;
+import com.box.boxjavalibv2.exceptions.BoxServerException;
 import com.box.boxjavalibv2.interfaces.IAuthEvent;
 import com.box.boxjavalibv2.interfaces.IAuthFlowMessage;
+import com.box.restclientv2.exceptions.BoxRestException;
 
 /**
  * Activity for OAuth. Use this activity by using the intent from createOAuthActivityIntent method. On completion, this activity will put the parcelable
@@ -24,6 +31,7 @@ public class OAuthActivity extends Activity {
 
     public static final String ERROR_MESSAGE = "exception";
     public static final String BOX_CLIENT = "boxAndroidClient";
+    public static final String USER_LOGIN = "userLogin";
 
     private static final String CLIENT_ID = "clientId";
     private static final String CLIENT_SECRET = "clientSecret";
@@ -78,10 +86,29 @@ public class OAuthActivity extends Activity {
             @Override
             public void onAuthFlowEvent(final IAuthEvent event, final IAuthFlowMessage message) {
                 if (event == OAuthEvent.OAUTH_CREATED) {
-                    Intent intent = new Intent();
-                    intent.putExtra(BOX_CLIENT, boxClient);
-                    OAuthActivity.this.setResult(RESULT_OK, intent);
-                    finish();
+                    AsyncTask<Null, Null, String> userMailTask = new AsyncTask<Null, Null, String>() {
+                        @Override
+                        protected String doInBackground(Null...params) {
+                            String userMail = null;
+                            try {
+                                userMail = boxClient.getUsersManager().getCurrentUser(null).getLogin();
+                            } catch (Exception e) {
+                                userMail = null;
+                            }
+                            
+                            return userMail;
+                        }
+                        
+                        @Override
+                        protected void onPostExecute(String result) {
+                            Intent intent = new Intent();
+                            intent.putExtra(BOX_CLIENT, boxClient);
+                            intent.putExtra(USER_LOGIN, result);
+                            OAuthActivity.this.setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    };
+                    userMailTask.execute();
                 }
             }
 
