@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.webkit.SslErrorHandler;
 
 import com.box.boxandroidlibv2.BoxAndroidClient;
-import com.box.boxandroidlibv2.R;
 import com.box.boxandroidlibv2.viewlisteners.OAuthWebViewListener;
 import com.box.boxandroidlibv2.views.OAuthWebView;
 import com.box.boxjavalibv2.events.OAuthEvent;
@@ -33,7 +33,9 @@ public class OAuthActivity extends Activity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.boxandroidlibv2_activity_oauth);
+        oauthView = new OAuthWebView(this, null);
+        oauthView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        setContentView(oauthView);
 
         String clientId = getIntent().getStringExtra(CLIENT_ID);
         String clientSecret = getIntent().getStringExtra(CLIENT_SECRET);
@@ -50,7 +52,6 @@ public class OAuthActivity extends Activity {
      */
     private void startOAuth(final String clientId, final String clientSecret, boolean allowShowRedirect) {
         BoxAndroidClient boxClient = new BoxAndroidClient(clientId, clientSecret);
-        oauthView = (OAuthWebView) findViewById(R.id.oauthview);
         oauthView.setAllowShowingRedirectPage(allowShowRedirect);
         oauthView.initializeAuthFlow(boxClient, this);
         boxClient.authenticate(oauthView, false, getOAuthFlowListener(boxClient));

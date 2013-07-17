@@ -10,24 +10,16 @@ import org.apache.http.NameValuePair;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
 
-import com.box.boxandroidlibv2.R;
 import com.box.boxandroidlibv2.exceptions.BoxAndroidLibException;
-import com.box.boxandroidlibv2.exceptions.UserTerminationException;
 import com.box.boxandroidlibv2.viewdata.OAuthWebViewData;
 import com.box.boxandroidlibv2.viewlisteners.OAuthDataMessage;
 import com.box.boxandroidlibv2.viewlisteners.OAuthWebViewListener;
@@ -135,7 +127,6 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
         private boolean allowShowRedirectPage = true;
 
         private final List<IAuthFlowListener> mListeners = new ArrayList<IAuthFlowListener>();
-        private Activity mActivity;
 
         /**
          * Constructor.
@@ -150,7 +141,6 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
         public OAuthWebViewClient(final OAuthWebViewData webViewData, final Activity activity, final BoxClient boxClient) {
             super();
             this.mwebViewData = webViewData;
-            this.mActivity = activity;
             this.mBoxClient = boxClient;
         }
 
@@ -188,33 +178,6 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
                 }
             }
             return false;
-        }
-
-        @Override
-        public void onReceivedHttpAuthRequest(final WebView view, final HttpAuthHandler handler, final String host, final String realm) {
-            for (IAuthFlowListener listener : mListeners) {
-                listener.onAuthFlowEvent(OAuthEvent.AUTH_REQUEST_RECEIVED, new StringMessage(host, realm));
-            }
-            LayoutInflater factory = mActivity.getLayoutInflater();
-            final View textEntryView = factory.inflate(R.layout.boxandroidlibv2_alert_dialog_text_entry, null);
-
-            AlertDialog loginAlert = new AlertDialog.Builder(mActivity).setTitle(R.string.boxandroidlibv2_alert_dialog_text_entry).setView(textEntryView)
-                .setPositiveButton(R.string.boxandroidlibv2_alert_dialog_ok, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int whichButton) {
-                        String userName = ((EditText) textEntryView.findViewById(R.id.username_edit)).getText().toString();
-                        String password = ((EditText) textEntryView.findViewById(R.id.password_edit)).getText().toString();
-                        handler.proceed(userName, password);
-                    }
-                }).setNegativeButton(R.string.boxandroidlibv2_alert_dialog_cancel, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int whichButton) {
-                        fireExceptions(new UserTerminationException());
-                    }
-                }).create();
-            loginAlert.show();
         }
 
         @Override
@@ -289,7 +252,6 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
         public void destroy() {
             mListeners.clear();
             mBoxClient = null;
-            mActivity = null;
         }
 
         /**
