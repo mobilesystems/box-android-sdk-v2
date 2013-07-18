@@ -13,14 +13,10 @@ import android.webkit.SslErrorHandler;
 
 import com.box.boxandroidlibv2.BoxAndroidClient;
 import com.box.boxandroidlibv2.viewlisteners.OAuthWebViewListener;
-import com.box.boxandroidlibv2.viewlisteners.StringMessage;
 import com.box.boxandroidlibv2.views.OAuthWebView;
 import com.box.boxjavalibv2.events.OAuthEvent;
-import com.box.boxjavalibv2.exceptions.AuthFatalFailureException;
-import com.box.boxjavalibv2.exceptions.BoxServerException;
 import com.box.boxjavalibv2.interfaces.IAuthEvent;
 import com.box.boxjavalibv2.interfaces.IAuthFlowMessage;
-import com.box.restclientv2.exceptions.BoxRestException;
 
 /**
  * Activity for OAuth. Use this activity by using the intent from createOAuthActivityIntent method. On completion, this activity will put the parcelable
