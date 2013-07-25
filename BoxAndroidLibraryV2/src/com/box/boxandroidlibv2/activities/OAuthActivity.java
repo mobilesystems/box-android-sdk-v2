@@ -49,10 +49,10 @@ public class OAuthActivity extends Activity {
      * @param allowShowRedirect
      */
     private void startOAuth(final String clientId, final String clientSecret, boolean allowShowRedirect) {
-        oauthView = (OAuthWebView) findViewById(R.id.oauthview);
         BoxAndroidClient boxClient = new BoxAndroidClient(clientId, clientSecret);
-        oauthView.initializeAuthFlow(boxClient, this);
+        oauthView = (OAuthWebView) findViewById(R.id.oauthview);
         oauthView.setAllowShowingRedirectPage(allowShowRedirect);
+        oauthView.initializeAuthFlow(boxClient, this);
         boxClient.authenticate(oauthView, false, getOAuthFlowListener(boxClient));
     }
 
