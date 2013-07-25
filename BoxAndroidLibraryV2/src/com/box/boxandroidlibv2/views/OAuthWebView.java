@@ -165,26 +165,29 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
                     listener.onAuthFlowEvent(OAuthEvent.PAGE_STARTED, new StringMessage(StringMessage.MESSAGE_URL, url));
                 }
             }
+        }
 
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            String code = null;
             try {
-                String code = getResponseValueFromUrl(url);
-                if (StringUtils.isNotEmpty(code)) {
-                    for (IAuthFlowListener listener : mListeners) {
-                        if (listener != null) {
-                            listener.onAuthFlowMessage(new StringMessage(mwebViewData.getResponseType(), code));
-                        }
-                    }
-                    startCreateOAuth(code);
-                    if (!allowShowRedirectPage()) {
-                        view.stopLoading();
-                    }
-                }
+                code = getResponseValueFromUrl(url);
             }
             catch (URISyntaxException e) {
-                fireExceptions(new BoxAndroidLibException(e));
+                fireExceptions(e);
             }
-            fireEvents(OAuthEvent.PAGE_FINISHED, new StringMessage(StringMessage.MESSAGE_URL, url));
-
+            if (StringUtils.isNotEmpty(code)) {
+                for (IAuthFlowListener listener : mListeners) {
+                    if (listener != null) {
+                        listener.onAuthFlowMessage(new StringMessage(mwebViewData.getResponseType(), code));
+                    }
+                }
+                startCreateOAuth(code);
+                if (!allowShowRedirectPage()) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         @Override
