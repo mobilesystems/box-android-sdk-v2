@@ -48,6 +48,8 @@ import com.box.restclientv2.httpclientsupport.HttpClientURIBuilder;
  */
 public class OAuthWebView extends WebView implements IAuthFlowUI {
 
+    private boolean allowShowingRedirectPage = true;
+
     private OAuthWebViewData mWebViewData;
 
     private OAuthWebViewClient mWebClient;
@@ -79,6 +81,7 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
     public void initializeAuthFlow(final BoxClient boxClient, final Object activity) {
         this.mWebViewData = new OAuthWebViewData(boxClient.getOAuthDataController());
         mWebClient = new OAuthWebViewClient(mWebViewData, (Activity) activity, boxClient);
+        mWebClient.setAllowShowRedirectPage(allowShowRedirectPage());
         getSettings().setJavaScriptEnabled(true);
         setWebViewClient(mWebClient);
     }
@@ -108,12 +111,28 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
     }
 
     /**
+     * @return the allowShowingRedirectPage
+     */
+    public boolean allowShowRedirectPage() {
+        return allowShowingRedirectPage;
+    }
+
+    /**
+     * @param allowShowingRedirectPage
+     *            the allowShowingRedirectPage to set
+     */
+    public void setAllowShowingRedirectPage(boolean allowShowingRedirectPage) {
+        this.allowShowingRedirectPage = allowShowingRedirectPage;
+    }
+
+    /**
      * WebViewClient for the OAuth WebView.
      */
     private static class OAuthWebViewClient extends WebViewClient {
 
         private BoxClient mBoxClient;
         private final OAuthWebViewData mwebViewData;
+        private boolean allowShowRedirectPage = true;
 
         private final List<IAuthFlowListener> mListeners = new ArrayList<IAuthFlowListener>();
         private Activity mActivity;
@@ -146,6 +165,26 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
                     listener.onAuthFlowEvent(OAuthEvent.PAGE_STARTED, new StringMessage(StringMessage.MESSAGE_URL, url));
                 }
             }
+
+            try {
+                String code = getResponseValueFromUrl(url);
+                if (StringUtils.isNotEmpty(code)) {
+                    for (IAuthFlowListener listener : mListeners) {
+                        if (listener != null) {
+                            listener.onAuthFlowMessage(new StringMessage(mwebViewData.getResponseType(), code));
+                        }
+                    }
+                    startCreateOAuth(code);
+                    if (!allowShowRedirectPage()) {
+                        view.stopLoading();
+                    }
+                }
+            }
+            catch (URISyntaxException e) {
+                fireExceptions(new BoxAndroidLibException(e));
+            }
+            fireEvents(OAuthEvent.PAGE_FINISHED, new StringMessage(StringMessage.MESSAGE_URL, url));
+
         }
 
         @Override
@@ -177,22 +216,7 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
 
         @Override
         public void onPageFinished(final WebView view, final String url) {
-            try {
-                String code = getResponseValueFromUrl(url);
-                if (StringUtils.isNotEmpty(code)) {
-                    for (IAuthFlowListener listener : mListeners) {
-                        if (listener != null) {
-                            listener.onAuthFlowMessage(new StringMessage(mwebViewData.getResponseType(), code));
-                        }
-                    }
-                    startCreateOAuth(code);
-                }
-            }
-            catch (URISyntaxException e) {
-                fireExceptions(new BoxAndroidLibException(e));
-            }
             fireEvents(OAuthEvent.PAGE_FINISHED, new StringMessage(StringMessage.MESSAGE_URL, url));
-
         }
 
         /**
@@ -299,6 +323,21 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
                     listener.onAuthFlowEvent(event, message);
                 }
             }
+        }
+
+        /**
+         * @return the allowShowRedirectPage
+         */
+        public boolean allowShowRedirectPage() {
+            return allowShowRedirectPage;
+        }
+
+        /**
+         * @param allowShowRedirectPage
+         *            the allowShowRedirectPage to set
+         */
+        public void setAllowShowRedirectPage(boolean allowShowRedirectPage) {
+            this.allowShowRedirectPage = allowShowRedirectPage;
         }
     }
 

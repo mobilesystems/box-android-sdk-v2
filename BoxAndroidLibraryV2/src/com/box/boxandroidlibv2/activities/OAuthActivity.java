@@ -27,6 +27,7 @@ public class OAuthActivity extends Activity {
 
     private static final String CLIENT_ID = "clientId";
     private static final String CLIENT_SECRET = "clientSecret";
+    private static final String ALLOW_LOAD_REDIRECT_PAGE = "allowloadredirectpage";
     private OAuthWebView oauthView;
 
     @Override
@@ -36,7 +37,8 @@ public class OAuthActivity extends Activity {
 
         String clientId = getIntent().getStringExtra(CLIENT_ID);
         String clientSecret = getIntent().getStringExtra(CLIENT_SECRET);
-        startOAuth(clientId, clientSecret);
+        boolean allowShowRedirect = getIntent().getBooleanExtra(ALLOW_LOAD_REDIRECT_PAGE, true);
+        startOAuth(clientId, clientSecret, allowShowRedirect);
     }
 
     /**
@@ -44,11 +46,13 @@ public class OAuthActivity extends Activity {
      * 
      * @param clientId
      * @param clientSecret
+     * @param allowShowRedirect
      */
-    private void startOAuth(final String clientId, final String clientSecret) {
+    private void startOAuth(final String clientId, final String clientSecret, boolean allowShowRedirect) {
         oauthView = (OAuthWebView) findViewById(R.id.oauthview);
         BoxAndroidClient boxClient = new BoxAndroidClient(clientId, clientSecret);
         oauthView.initializeAuthFlow(boxClient, this);
+        oauthView.setAllowShowingRedirectPage(allowShowRedirect);
         boxClient.authenticate(oauthView, false, getOAuthFlowListener(boxClient));
     }
 
@@ -115,6 +119,27 @@ public class OAuthActivity extends Activity {
         Intent intent = new Intent(context, OAuthActivity.class);
         intent.putExtra(CLIENT_ID, clientId);
         intent.putExtra(CLIENT_SECRET, clientSecret);
+        return intent;
+    }
+
+    /**
+     * Create intent to launch OAuthActivity
+     * 
+     * @param context
+     *            context
+     * @param clientId
+     *            your box client id
+     * @param clientSecret
+     *            your box client secret
+     * @param allowShowRedirectPage
+     *            Whether you want to load/show redirected page after OAuth flow is done.
+     * @return
+     */
+    public static Intent createOAuthActivityIntent(final Context context, final String clientId, final String clientSecret, final boolean allowShowRedirectPage) {
+        Intent intent = new Intent(context, OAuthActivity.class);
+        intent.putExtra(CLIENT_ID, clientId);
+        intent.putExtra(CLIENT_SECRET, clientSecret);
+        intent.putExtra(ALLOW_LOAD_REDIRECT_PAGE, allowShowRedirectPage);
         return intent;
     }
 }
