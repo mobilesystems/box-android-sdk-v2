@@ -3,56 +3,30 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="BoxAndroidLibraryV2">
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="BoxAndroidLibraryV2">
     <property environment="env"/>
     <property name="BoxJavaLibraryV2.location" value="../../BoxJava/BoxJavaLibraryV2"/>
+	<property name="BoxJavaLibraryV2.jarname" value="BoxJavaLibraryV2.jar"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
     <property name="source" value="1.6"/>
+	<property name="OutputJarName" value="BoxAndroidLibraryV2-original.jar" />
+	
 		
     <path id="Android Dependencies.libraryclasspath">
-        <pathelement location="../../BoxJava/BoxJavaLibraryV2/libs/commons-io-2.3.jar"/>
-		<pathelement location="../../BoxJava/BoxJavaLibraryV2/libs/commons-lang-2.6.jar"/>
-		<pathelement location="../../BoxJava/BoxJavaLibraryV2/libs/commons-logging-1.1.1.jar"/>
-        <pathelement location="../../BoxJava/BoxJavaLibraryV2/libs/jackson-databind-2-1.0.0.jar"/>
-		<pathelement location="../../BoxJavaLibraryV2/libs/easymock-3.1.jar"/>
-        <pathelement location="../../BoxJavaLibraryV2/libs/cglib-nodep-2.2.2.jar"/>
-		<pathelement location="../../BoxJavaLibraryV2/libs/powermock-easymock-1.4.12-full.jar"/>
-        <pathelement location="../../BoxJavaLibraryV2/libs/robolectric-1.2-20121030.213744-165-jar-with-dependencies.jar"/>
 		<pathelement location="libs/android-support-v4.jar"/>
-		<pathelement location="libs/BoxJavaLibraryV2.jar"/>
+		<pathelement location="libs/${BoxJavaLibraryV2.jarname}"/>
 		<pathelement location="libs/commons-codec-1.6.jar"/>
 		<pathelement location="libs/jackson-core-2-1.0.0.jar"/>
         <pathelement location="libs/jackson-annotations-2.0.0.jar"/>
-		<pathelement location="libs/httpclient-4.2.1.jar"/>
-		<pathelement location="libs/httpclient-cache-4.2.1.jar"/>
-		<pathelement location="libs/httpcore-4.2.1.jar"/>
+		<pathelement location="libs/jackson-databind-2-1.0.0.jar"/>
     </path>
     
 	<path id="Persisted container [com.android.ide.eclipse.adt.DEPENDENCIES for project [BoxAndroidLibraryV2]].libraryclasspath"/>
     
 	<path id="Android 4.2.2.libraryclasspath">
-        <pathelement location="../../../../../developer/adt-bundle/sdk/platforms/android-17/android.jar"/>
-    </path>
-    
-	<path id="BoxJavaLibraryV2.classpath">
-        <pathelement location="${BoxJavaLibraryV2.location}/bin"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/cglib-nodep-2.2.2.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/commons-codec-1.6.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/commons-io-2.3.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/commons-lang-2.6.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/commons-logging-1.1.1.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/easymock-3.1.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/jackson-annotations-2.0.0.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/jackson-core-2-1.0.0.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/jackson-databind-2-1.0.0.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/junit-4.8.2.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/powermock-easymock-1.4.12-full.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/robolectric-1.2-20121030.213744-165-jar-with-dependencies.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/httpmime-4.2.5.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/httpclient-4.2.5.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/httpclient-cache-4.2.5.jar"/>
-        <pathelement location="${BoxJavaLibraryV2.location}/libs/httpcore-4.2.4.jar"/>
+        <pathelement location="${env.ANDROID_HOME}/platforms/android-17/android.jar"/>
     </path>
 	
     <path id="BoxAndroidLibraryV2.classpath">
@@ -60,9 +34,9 @@
         <path refid="Persisted container [com.android.ide.eclipse.adt.DEPENDENCIES for project [BoxAndroidLibraryV2]].libraryclasspath"/>
         <path refid="Android 4.2.2.libraryclasspath"/>
         <pathelement location="bin/classes"/>
-        <path refid="BoxJavaLibraryV2.classpath"/>
     </path>
     
+	
 	<target name="init">
         <mkdir dir="bin/classes"/>
         <copy includeemptydirs="false" todir="bin/classes">
@@ -77,22 +51,25 @@
         </copy>
     </target>
     
-	<target name="clean">
+	
+	<target depends="clean-subprojects" name="clean" description="Clean the project and it's subprojects">
         <delete dir="bin/classes"/>
-		<delete file="BoxAndroidLibraryV2.jar"/>
+		<delete file="${OutputJarName}"/>
     </target>
     
-	<target depends="clean" name="cleanall">
+	
+	<target name="clean-subprojects">
+		<delete file="libs/${BoxJavaLibraryV2.jarname}"/>
         <ant antfile="build.xml" dir="${BoxJavaLibraryV2.location}" inheritAll="false" target="clean"/>
     </target>
     
-	<target depends="build-subprojects,build-project" name="build"/>
+	<target depends="build-subprojects,build-project" name="build" description="Build the project and it's subprojects"/>
     
+	
 	<target name="build-subprojects">
         <ant antfile="build.xml" dir="${BoxJavaLibraryV2.location}" inheritAll="false" inheritRefs="false" target="release"/>
-		<echo message="Copying ${BoxJavaLibraryV2.location}/dist/release/BoxJavaLibraryV2.jar ..."/> 
 		<!--Fragile - consider retrieving the file location from BoxJavaLib's build.xml somehow. Maybe as an output...-->
-		<copy todir="libs" file="${BoxJavaLibraryV2.location}/dist/release/BoxJavaLibraryV2.jar"/>
+		<copy todir="libs" file="${BoxJavaLibraryV2.location}/dist/release/${BoxJavaLibraryV2.jarname}"/>
     </target>
 	
 	
@@ -106,12 +83,9 @@
             <src path="src"/>
             <classpath refid="BoxAndroidLibraryV2.classpath"/>
         </javac>
-		<jar destfile="BoxAndroidLibraryV2.jar" basedir="bin/classes"> <!-- TODO: try with zipfileset -->
-			<zipfileset src="libs/BoxJavaLibraryV2.jar" includes="**/*.class"/>
-			<zipfileset src="libs/jackson-core-2-1.0.0.jar" includes="**/*.class"/>
-			<zipfileset src="libs/jackson-annotations-2.0.0.jar" includes="**/*.class"/>
-			<zipfileset src="libs/commons-codec-1.6.jar" includes="**/*.class"/>
+		<jar destfile="${OutputJarName}" basedir="bin/classes">
+			<zipfileset src="libs/${BoxJavaLibraryV2.jarname}" includes="**/*.class"/>
 		</jar>
     </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+
 </project>
