@@ -1,0 +1,34 @@
+-injars BoxAndroidLibraryV2_original.jar
+-outjars BoxAndroidLibraryV2.jar
+
+-libraryjars 'D:\developer\adt-bundle\sdk\platforms\android-17\android.jar'
+
+-dontskipnonpubliclibraryclassmembers
+-dontoptimize
+-dontobfuscate
+-dontusemixedcaseclassnames
+-dontnote
+-dontwarn
+
+
+-keep class com.box.** {
+    <fields>;
+    <methods>;
+}
+
+-keep class com.fasterxml.jackson.databind.ObjectMapper** {
+    <fields>;
+    <methods>;
+}
+
+-keep class com.fasterxml.jackson.databind.cfg.MapperConfig** {
+    <fields>;
+    <methods>;
+}
+
+# Also keep - Enumerations. Keep the special static methods that are required in
+# enumeration classes.
+-keepclassmembers enum  * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
