@@ -1,4 +1,4 @@
--injars BoxAndroidLibraryV2_original.jar
+-injars BoxAndroidLibraryV2-original.jar
 -outjars BoxAndroidLibraryV2.jar
 
 -libraryjars 'D:\developer\adt-bundle\sdk\platforms\android-17\android.jar'
