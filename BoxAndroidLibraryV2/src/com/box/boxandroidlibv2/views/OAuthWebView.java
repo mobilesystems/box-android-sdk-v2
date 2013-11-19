@@ -1,5 +1,6 @@
 package com.box.boxandroidlibv2.views;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -239,10 +240,19 @@ public class OAuthWebView extends WebView implements IAuthFlowUI {
 
         @Override
         public void onReceivedSslError(final WebView view, final SslErrorHandler handler, final SslError error) {
+            boolean sslErrorHandled = false;
             for (IAuthFlowListener listener : mListeners) {
                 if (listener != null && listener instanceof OAuthWebViewListener) {
                     ((OAuthWebViewListener) listener).onSslError(handler, error);
+                    sslErrorHandled = true;
                 }
+            }
+            
+            if(!sslErrorHandled) {
+                // Quick fix of the bug that no OAuthWebViewListener is actually provided to the WebView/Client but only an IAuthFlowListener (the BoxClient itself)
+                view.clearSslPreferences();
+                handler.cancel();
+                fireExceptions(new IOException(error.toString()));
             }
         }
 
